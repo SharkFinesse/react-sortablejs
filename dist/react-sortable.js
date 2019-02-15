@@ -215,7 +215,7 @@ function (_Component) {
             if (remote !== _this2) {
               var remoteOptions = remote.props.options || {};
 
-              if (_typeof(remoteOptions.group) === 'object' && remoteOptions.group.pull === 'clone') {
+              if (_typeof(remoteOptions.group) === 'object') {
                 // Remove the node with the same data-reactid
                 evt.item.parentNode.removeChild(evt.item);
               }
@@ -297,7 +297,7 @@ exports.default = _default;
  * LICENSE file in the root directory of this source tree.
  */
 
-if (false) { var throwOnDirectAccess, isValidElement, REACT_ELEMENT_TYPE; } else {
+if (false) { var throwOnDirectAccess, ReactIs; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
   module.exports = __webpack_require__(3)();
@@ -321,6 +321,8 @@ if (false) { var throwOnDirectAccess, isValidElement, REACT_ELEMENT_TYPE; } else
 var ReactPropTypesSecret = __webpack_require__(4);
 
 function emptyFunction() {}
+function emptyFunctionWithReset() {}
+emptyFunctionWithReset.resetWarningCache = emptyFunction;
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -354,16 +356,19 @@ module.exports = function() {
     any: shim,
     arrayOf: getShim,
     element: shim,
+    elementType: shim,
     instanceOf: getShim,
     node: shim,
     objectOf: getShim,
     oneOf: getShim,
     oneOfType: getShim,
     shape: getShim,
-    exact: getShim
+    exact: getShim,
+
+    checkPropTypes: emptyFunctionWithReset,
+    resetWarningCache: emptyFunction
   };
 
-  ReactPropTypes.checkPropTypes = emptyFunction;
   ReactPropTypes.PropTypes = ReactPropTypes;
 
   return ReactPropTypes;
